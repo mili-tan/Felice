@@ -7,7 +7,7 @@ headers.update({'User-Agent': 'Felice/0.1'})
 
 
 @app.route("/")
-def template1():
+def index():
     return app.send_static_file('/static/index.html')
 
 @app.route('/find/<keyword>')
