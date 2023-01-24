@@ -14,7 +14,8 @@
         <div class="col-md-6">
             <div class="form">
                 <div class="input-group mb-3">
-                    <input id="text" name="text" type="text" class="form-control form-input" placeholder="Enter Somethings here...">
+                    <input id="text" name="text" type="text" class="form-control form-input"
+                           placeholder="Enter Somethings here...">
                     <div class="input-group-append">
                         <button style="width:55px" class="btn btn-secondary" type="button" onclick="btnAction()">
                             <div class="oi oi-chevron-right p-1 m-1"></div>
@@ -34,8 +35,15 @@
 </body>
 
 <script>
+    let text = document.getElementById("text").value;
+    text.addEventListener("keypress", function (event) {
+        if (event.key === "Enter") {
+            event.preventDefault();
+            btnAction();
+        }
+    });
+
     function btnAction() {
-        let text = document.getElementById("text").value;
         if (text.length !== 0) {
             window.location.replace("https://felice.vercel.app/find/" + text);
         }
