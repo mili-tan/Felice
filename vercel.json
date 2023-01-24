@@ -8,12 +8,13 @@
     ],
     "routes": [
         {
-            "src": "/find/(.*)",
-            "dest": "app.py"
-        },
-        {
             "src": "/(.*)",
             "dest": "/"
+        },
+        {
+            "src": "/find/(.*)",
+            "dest": "app.py"
         }
+
     ]
 }
