@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8"/>
+    <title>Felice | Mili.ONE</title>
+    <link href="css/bootstrap/bootstrap.min.css" rel="stylesheet"/>
+    <link href="css/app.css" rel="stylesheet"/>
+</head>
+
+<body>
+<div class="container">
+    <div class="row height d-flex justify-content-center align-items-center">
+        <div class="col-md-6">
+            <div class="form">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control form-input" placeholder="Enter Somethings here...">
+                    <div class="input-group-append">
+                        <button style="width:55px" class="btn btn-secondary" type="button" onclick="btnAction()">
+                            <div class="oi oi-chevron-right p-1 m-1"></div>
+                        </button>
+                    </div>
+                </div>
+                <footer class="pt-3 mt-3 text-muted text-center small">
+                    <div>&copy; Felice by Mili.ONE Network</div>
+                    <img class="m-3"
+                         src="https://upload.wikimedia.org/wikipedia/commons/4/41/Wikidata_Stamp_Rec_Light.svg"
+                         width="100" alt="Powered by Wikidata">
+                </footer>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+<script>
+    function btnAction() {
+        let text = document.getElementById("text").value;
+        if (text.length !== 0) {
+            window.location.replace("https://felice.vercel.app/find/" + text);
+        }
+    }
+</script>
+
+</html>

@@ -1,5 +1,5 @@
 import requests
-from flask import Flask, jsonify, redirect
+from flask import Flask, redirect
 
 app = Flask(__name__)
 headers = requests.utils.default_headers()
