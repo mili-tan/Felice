@@ -35,7 +35,7 @@
 </body>
 
 <script>
-    let text = document.getElementById("text").value;
+    let text = document.getElementById("text");
     text.addEventListener("keypress", function (event) {
         if (event.key === "Enter") {
             event.preventDefault();
@@ -45,7 +45,7 @@
 
     function btnAction() {
         if (text.length !== 0) {
-            window.location.replace("https://felice.vercel.app/find/" + text);
+            window.location.replace("https://felice.vercel.app/find/" + text.value);
         }
     }
 </script>
