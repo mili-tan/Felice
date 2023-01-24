@@ -1,9 +1,14 @@
 import requests
-from flask import Flask, redirect
+from flask import Flask, redirect, render_template
 
 app = Flask(__name__, static_url_path='', static_folder="./static")
 headers = requests.utils.default_headers()
 headers.update({'User-Agent': 'Felice/0.1'})
+
+
+@app.route("/")
+def template1():
+    return app.send_static_file('/static/index.html')
 
 @app.route('/find/<keyword>')
 def find(keyword):
