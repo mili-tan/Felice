@@ -1,15 +1,9 @@
 import requests
 from flask import Flask, redirect
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='', static_folder="./static")
 headers = requests.utils.default_headers()
 headers.update({'User-Agent': 'Felice/0.1'})
-
-
-@app.route('/')
-def hello_world():  # put application's code here
-    return 'Hello World!'
-
 
 @app.route('/find/<keyword>')
 def find(keyword):
