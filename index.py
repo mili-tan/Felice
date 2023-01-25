@@ -27,7 +27,7 @@ def find(keyword):
             if len(entity['claims']) != 0:
                 p856url = entity['claims']['P856'][0]['mainsnak']['datavalue']['value']
                 return redirect(p856url)
-    return redirect("https://searx.si/search?q=" + keyword)
+    return redirect("https://duckduckgo.com/?q=!ducky+" + keyword)
 
 
 if __name__ == '__main__':
