@@ -1,5 +1,5 @@
 import requests
-from flask import Flask, redirect, render_template
+from flask import Flask, redirect
 
 app = Flask(__name__, static_url_path='', static_folder="./static")
 headers = requests.utils.default_headers()
@@ -10,8 +10,12 @@ headers.update({'User-Agent': 'Felice/0.1'})
 def index():
     return app.send_static_file('index.html')
 
+
 @app.route('/find/<keyword>')
 def find(keyword):
+    if keyword == 'idk' or keyword == '.idk':
+        return redirect("https://felice.vercel.app")
+
     keyword = keyword.replace('-', " ")
     keyword = keyword.rstrip('.idk')
 
@@ -27,6 +31,12 @@ def find(keyword):
             if len(entity['claims']) != 0:
                 p856url = entity['claims']['P856'][0]['mainsnak']['datavalue']['value']
                 return redirect(p856url)
+
+    searx = requests.get(
+        "https://search.unlocked.link/search?format=json&q=" + keyword,
+        headers=headers).json()
+    if len(searx) != 0 and len(searx['results']) != 0:
+        return redirect(searx['results'][0]['url'])
     return redirect("https://duckduckgo.com/?q=!ducky+" + keyword)
 
 
