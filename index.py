@@ -13,8 +13,8 @@ def index():
 
 @app.route('/search/<keyword>')
 def search(keyword):
-    keywords = keyword.split('.', '@')
-    if len(keywords) == 3 or (len(keywords) == 2 and keywords[1] != 'idk'):
+    keywords = keyword.split('.')
+    if len(keywords) == 3 or (len(keywords) == 2 and keywords[1] != 's' and keywords[1] != 'search'):
         engine = keywords[1]
         if engine == "ddg":
             engine = "duckduckgo"
@@ -26,7 +26,7 @@ def search(keyword):
             engine = "yahoo"
         return redirect("https://searx.si/search?q=" + keywords[0] + "&engines=" + engine)
     else:
-        return redirect("https://searx.si/search?q=" + keyword)
+        return redirect("https://searx.si/search?q=" + keywords[0])
 
 
 @app.route('/find/<keyword>')
