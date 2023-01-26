@@ -24,9 +24,9 @@ def search(keyword):
             engine = "bing"
         elif engine == "yh":
             engine = "yahoo"
-        return redirect("https://searx.si/search?q=" + keywords[0] + "&engines=" + engine)
+        return redirect("https://searx.si/search?q=" + keywords[0].replace('-', " ") + "&engines=" + engine)
     else:
-        return redirect("https://searx.si/search?q=" + keywords[0])
+        return redirect("https://searx.si/search?q=" + keywords[0].replace('-', " "))
 
 
 @app.route('/find/<keyword>')
