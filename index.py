@@ -33,7 +33,7 @@ def find(keyword):
                 return redirect(p856url)
 
     searx = requests.get(
-        "https://search.unlocked.link/search?format=json&q=" + keyword,
+        "https://search.unlocked.link/search?format=json&language=all&safesearch=1&q=" + keyword,
         headers=headers).json()
     if len(searx) != 0 and len(searx['results']) != 0:
         return redirect(searx['results'][0]['url'])
