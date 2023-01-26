@@ -11,6 +11,24 @@ def index():
     return app.send_static_file('index.html')
 
 
+@app.route('/search/<keyword>')
+def search(keyword):
+    keywords = keyword.split('.', '@')
+    if len(keywords) == 3 or (len(keywords) == 2 and keywords[1] != 'idk'):
+        engine = keywords[1]
+        if engine == "ddg":
+            engine = "duckduckgo"
+        elif engine == "go" or engine == "gg":
+            engine = "google"
+        elif engine == "bi" or engine == "by":
+            engine = "bing"
+        elif engine == "yh":
+            engine = "yahoo"
+        return redirect("https://searx.si/search?q=" + keywords[0] + "&engines=" + engine)
+    else:
+        return redirect("https://searx.si/search?q=" + keyword)
+
+
 @app.route('/find/<keyword>')
 def find(keyword):
     if keyword == 'idk' or keyword == '.idk':
@@ -19,18 +37,17 @@ def find(keyword):
     keyword = keyword.replace('-', " ")
     keyword = keyword.rstrip('.idk')
 
-    search = requests.get(
+    entitySearch = requests.get(
         "https://www.wikidata.org/w/api.php?action=wbsearchentities&language=en&limit=3&format=json&search=" + keyword,
         headers=headers).json()
-    if len(search['search']) != 0:
-        for i in search['search']:
+    if len(entitySearch['search']) != 0:
+        for i in entitySearch['search']:
             d = i['id']
-            entity = requests.get(
+            entityClaims = requests.get(
                 "https://www.wikidata.org/w/api.php?action=wbgetclaims&property=P856&format=json&entity=" + d,
                 headers=headers).json()
-            if len(entity['claims']) != 0:
-                p856url = entity['claims']['P856'][0]['mainsnak']['datavalue']['value']
-                return redirect(p856url)
+            if len(entityClaims['claims']) != 0:
+                return redirect(entityClaims['claims']['P856'][0]['mainsnak']['datavalue']['value'])
 
     searx = requests.get(
         "https://search.unlocked.link/search?format=json&language=all&safesearch=1&q=" + keyword,
