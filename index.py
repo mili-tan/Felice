@@ -24,6 +24,8 @@ def search(keyword):
             engine = "bing"
         elif engine == "yh":
             engine = "yahoo"
+        elif engine == "wp" or engine == "wiki":
+            engine = "wikipedia"
         return redirect("https://searx.si/search?q=" + keywords[0].replace('-', " ") + "&engines=" + engine)
     else:
         return redirect("https://searx.si/search?q=" + keywords[0].replace('-', " "))
