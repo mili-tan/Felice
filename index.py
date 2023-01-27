@@ -15,27 +15,24 @@ def index():
 def search(keyword):
     keywords = keyword.split('.')
     if len(keywords) == 3 or (len(keywords) == 2 and keywords[1] != 's' and keywords[1] != 'search'):
-        engine = keywords[1]
-        if engine == "ddg":
-            engine = "duckduckgo"
-        elif engine == "go" or engine == "gg":
-            engine = "google"
-        elif engine == "bi" or engine == "by":
-            engine = "bing"
-        elif engine == "yh":
-            engine = "yahoo"
-        elif engine == "wp" or engine == "wiki":
-            engine = "wikipedia"
-            "https://searx.neocities.org/?q=baidu.com&theme=simple&language=all&oscar-style=logicodev"
-        return redirect("https://searx.neocities.org/?q=" + keywords[0].replace('-', " ") + "&engines=" + engine+"&theme=simple&language=all&oscar-style=logicodev")
+        return redirect(
+            "https://searx.neocities.org/?q=" + keywords[0].replace('-', " ") + "&engines=" + getEngine(keywords[1])
+            + "&theme=simple&language=all&oscar-style=logicodev")
     else:
-        return redirect("https://searx.neocities.org/?q=" + keywords[0].replace('-', " ") +"&theme=simple&language=all&oscar-style=logicodev")
+        return redirect("https://searx.neocities.org/?q=" + keywords[0].replace('-', " ")
+                        + "&theme=simple&language=all&oscar-style=logicodev")
 
 
 @app.route('/find/<keyword>')
 def find(keyword):
     if keyword == 'idk' or keyword == '.idk':
         return redirect("https://felice.vercel.app")
+
+    if keyword.contains('@'):
+        keywords = keyword.split('@')
+        return redirect(
+            "https://searx.neocities.org/?q=" + keywords[0].replace('-', " ") + "&engines=" + getEngine(keywords[1])
+            + "&theme=simple&language=all&oscar-style=logicodev")
 
     keyword = keyword.replace('-', " ")
     keyword = keyword.rstrip('.idk')
@@ -58,6 +55,20 @@ def find(keyword):
     if len(searx) != 0 and len(searx['results']) != 0:
         return redirect(searx['results'][0]['url'])
     return redirect("https://duckduckgo.com/?q=!ducky+" + keyword)
+
+
+def getEngine(engine):
+    if engine == "ddg":
+        engine = "duckduckgo"
+    elif engine == "go" or engine == "gg":
+        engine = "google"
+    elif engine == "bi" or engine == "by":
+        engine = "bing"
+    elif engine == "yh":
+        engine = "yahoo"
+    elif engine == "wp" or engine == "wiki":
+        engine = "wikipedia"
+    return engine
 
 
 if __name__ == '__main__':
