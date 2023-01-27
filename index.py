@@ -28,7 +28,7 @@ def find(keyword):
     if keyword == 'idk' or keyword == '.idk':
         return redirect("https://felice.vercel.app")
 
-    if keyword.contains('@'):
+    if '@' in keyword:
         keywords = keyword.split('@')
         return redirect(
             "https://searx.neocities.org/?q=" + keywords[0].replace('-', " ") + "&engines=" + getEngine(keywords[1])
