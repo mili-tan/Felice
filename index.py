@@ -26,9 +26,10 @@ def search(keyword):
             engine = "yahoo"
         elif engine == "wp" or engine == "wiki":
             engine = "wikipedia"
-        return redirect("https://searx.si/search?q=" + keywords[0].replace('-', " ") + "&engines=" + engine)
+            "https://searx.neocities.org/?q=baidu.com&theme=simple&language=all&oscar-style=logicodev"
+        return redirect("https://searx.neocities.org/?q=" + keywords[0].replace('-', " ") + "&engines=" + engine+"&theme=simple&language=all&oscar-style=logicodev")
     else:
-        return redirect("https://searx.si/search?q=" + keywords[0].replace('-', " "))
+        return redirect("https://searx.neocities.org/?q=" + keywords[0].replace('-', " ") +"&theme=simple&language=all&oscar-style=logicodev")
 
 
 @app.route('/find/<keyword>')
