@@ -30,10 +30,10 @@ def search(keyword):
     keywords = keyword.split('.')
     if len(keywords) == 3 or (len(keywords) == 2 and keywords[1] != 's' and keywords[1] != 'search'):
         return redirect(
-            "https://searx.neocities.org/?q=" + keywords[0].replace('-', " ") + "&engines=" + getEngine(keywords[1])
+            getSearX() + "search?q=" + keywords[0].replace('-', " ") + "&engines=" + getEngine(keywords[1])
             + "&theme=simple&language=all&oscar-style=logicodev")
     else:
-        return redirect("https://searx.neocities.org/?q=" + keywords[0].replace('-', " ")
+        return redirect(getSearX() + "search?q=" + keywords[0].replace('-', " ")
                         + "&theme=simple&language=all&oscar-style=logicodev")
 
 
