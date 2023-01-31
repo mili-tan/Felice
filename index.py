@@ -1,14 +1,28 @@
+import io
+import sys
+from random import choice
+
 import requests
 from flask import Flask, redirect
 
-app = Flask(__name__, static_url_path='', static_folder="./static")
 headers = requests.utils.default_headers()
 headers.update({'User-Agent': 'Felice/0.1'})
+
+instances = requests.get(
+    "https://searx.space/data/instances.json",
+    headers=headers).json()["instances"]
+
+app = Flask(__name__, static_url_path='', static_folder="./static")
 
 
 @app.route("/")
 def index():
     return app.send_static_file('index.html')
+
+
+@app.route("/searx")
+def searx():
+    return str(getSearX())
 
 
 @app.route('/search/<keyword>')
@@ -69,6 +83,20 @@ def getEngine(engine):
     elif engine == "wp" or engine == "wiki":
         engine = "wikipedia"
     return engine
+
+
+def getSearX():
+    name = choice(list(instances.keys()))
+    inst = instances[name]
+    try:
+        if '.onion' in name or '.i2p' in name or int(inst["version"].split('.')[0]) < 2 \
+                or 'A' not in inst["tls"]['grade'] or 'A' not in inst["http"]['grade'] or (
+                inst["html"]['grade'] != "V" and inst["html"]['grade'] != "F"):
+            return getSearX()
+        else:
+            return name
+    except:
+        return getSearX()
 
 
 if __name__ == '__main__':
