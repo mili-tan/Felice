@@ -63,14 +63,14 @@ def find(keyword):
             if len(entityClaims['claims']) != 0:
                 return redirect(entityClaims['claims']['P856'][0]['mainsnak']['datavalue']['value'])
 
-    # try:
-    #     searx = requests.get(
-    #         "https://search.unlocked.link/search?format=json&language=all&safesearch=1&q=" + keyword,
-    #         headers=headers).json()
-    #     if len(searx) != 0 and len(searx['results']) != 0:
-    #         return redirect(searx['results'][0]['url'])
-    # except Exception as e:
-    #     print(e)
+    try:
+        searx = requests.get(
+            "https://search.mdosch.de/search?format=json&language=all&safesearch=1&q=" + keyword,
+            headers=headers).json()
+        if len(searx) != 0 and len(searx['results']) != 0:
+            return redirect(searx['results'][0]['url'])
+    except Exception as e:
+        print(e)
 
     return redirect("https://duckduckgo.com/?q=!ducky+" + keyword)
 
