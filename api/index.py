@@ -1,4 +1,5 @@
 import io
+import os
 import sys
 from random import choice
 
@@ -69,11 +70,11 @@ def find(keyword):
     try:
         apiKey = os.getenv('API_KEY')
         url = "https://api.search.brave.com/res/v1/web/search?q=" + keyword
-        headers = {
+        braveHeaders = {
             "Accept": "application/json",
             "X-Subscription-Token": apiKey
         }
-        brave = requests.get(url, headers=headers).json()
+        brave = requests.get(url, headers=braveHeaders).json()
         if len(brave) != 0 and len(brave['web']['results']) != 0:
             return redirect(searx['web']['results'][0]['url'])
     except Exception as e:
