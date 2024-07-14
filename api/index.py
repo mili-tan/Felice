@@ -76,7 +76,7 @@ def find(keyword):
         }
         brave = requests.get(url, headers=braveHeaders).json()
         if len(brave) != 0 and len(brave['web']['results']) != 0:
-            return redirect(searx['web']['results'][0]['url'])
+            return redirect(brave['web']['results'][0]['url'])
     except Exception as e:
         print(e)
 
