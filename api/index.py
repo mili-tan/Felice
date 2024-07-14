@@ -42,6 +42,9 @@ def find(keyword):
     if keyword == 'idk' or keyword == '.idk':
         return redirect("https://felice.vercel.app")
 
+    if 'xn--' in keyword:
+        keyword = str(bytes(keyword, encoding='UTF-8').decode('idna'))
+
     if '@' in keyword:
         keywords = keyword.split('@')
         return redirect(
