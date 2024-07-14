@@ -52,7 +52,9 @@ def find(keyword):
             "https://searx.neocities.org/?q=" + keywords[0].replace('-', " ") + "&engines=" + getEngine(keywords[1])
             + "&theme=simple&language=all&oscar-style=logicodev")
 
-    keyword = keyword.replace('-', " ")
+    keyword = keyword.replace(' ', "+")
+    keyword = keyword.replace('-', "+")
+    keyword = keyword.replace('_', "+")
     keyword = keyword.rstrip('.idk')
 
     entitySearch = requests.get(
