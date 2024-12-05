@@ -46,16 +46,16 @@ def find(keyword):
     if 'xn--' in keyword:
         keyword = str(bytes(keyword, encoding='UTF-8').decode('idna'))
 
-    if '@' in keyword:
-        keywords = keyword.split('@')
-        return redirect(
-            "https://searx.neocities.org/?q=" + keywords[0].replace('-', "+") + "&engines=" + getEngine(keywords[1])
-            + "&theme=simple&language=all&oscar-style=logicodev")
-
     keyword = keyword.replace(' ', "+")
     keyword = keyword.replace('-', "+")
     keyword = keyword.replace('_', "+")
     keyword = keyword.rstrip('.idk')
+
+    if '@' in keyword:
+        keywords = keyword.split('@')
+        return redirect(
+            "https://searx.neocities.org/?q=" + keywords[0] + "&engines=" + getEngine(keywords[1])
+            + "&theme=simple&language=all&oscar-style=logicodev")
 
     try:
         entitySearch = requests.get(
