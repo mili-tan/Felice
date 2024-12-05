@@ -57,17 +57,23 @@ def find(keyword):
     keyword = keyword.replace('_', "+")
     keyword = keyword.rstrip('.idk')
 
-    entitySearch = requests.get(
-        "https://www.wikidata.org/w/api.php?action=wbsearchentities&language=en&limit=3&format=json&search=" + keyword,
-        headers=headers).json()
-    if len(entitySearch['search']) != 0:
-        for i in entitySearch['search']:
-            d = i['id']
-            entityClaims = requests.get(
-                "https://www.wikidata.org/w/api.php?action=wbgetclaims&property=P856&format=json&entity=" + d,
-                headers=headers).json()
-            if len(entityClaims['claims']) != 0:
-                return redirect(entityClaims['claims']['P856'][0]['mainsnak']['datavalue']['value'])
+    try:
+        entitySearch = requests.get(
+            "https://www.wikidata.org/w/api.php?action=wbsearchentities&language=en&limit=3&format=json&search=" + keyword,
+            headers=headers).json()
+        if len(entitySearch['search']) != 0:
+            for i in entitySearch['search']:
+                d = i['id']
+                entityClaims = requests.get(
+                    "https://www.wikidata.org/w/api.php?action=wbgetclaims&property=P856&format=json&entity=" + d,
+                    headers=headers).json()
+                if len(entityClaims['claims']) != 0:
+                    try:
+                        return redirect(entityClaims['claims']['P856'][0]['mainsnak']['datavalue']['value'])
+                    except Exception as e:
+                        print(e)
+    except Exception as e:
+        print(e)
 
     try:
         apiKey = os.getenv('API_KEY')
