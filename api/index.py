@@ -28,6 +28,9 @@ def searx():
 
 @app.route('/search/<keyword>')
 def search(keyword):
+    if 'xn--' in keyword:
+        keyword = str(bytes(keyword, encoding='UTF-8').decode('idna'))
+    
     keywords = keyword.split('.')
     if len(keywords) == 3 or (len(keywords) == 2 and keywords[1] != 's' and keywords[1] != 'search'):
         return redirect(
