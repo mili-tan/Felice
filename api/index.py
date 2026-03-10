@@ -80,19 +80,22 @@ def find(keyword):
 
     try:
         apiKey = os.getenv('API_KEY')
-        url = "https://api.search.brave.com/res/v1/web/search?q=" + keyword
-        braveHeaders = {
-            "Accept": "application/json",
-            "X-Subscription-Token": apiKey
+        url = "https://ollama.com/api/web_search"
+        ollama_headers = {
+            "Authorization": f"Bearer {apiKey}",
+            "Content-Type": "application/json"
         }
-        brave = requests.get(url, headers=braveHeaders).json()
-        if len(brave) != 0 and len(brave['web']['results']) != 0:
-            return redirect(brave['web']['results'][0]['url'])
+        payload = {
+            "query": keyword,
+            "max_results": 1              
+        }
+        response = requests.post(url, json=payload, headers=ollama_headers).json()
+        if response and 'results' in response and len(response['results']) > 0:
+            return redirect(response['results'][0]['url'])
     except Exception as e:
         print(e)
 
     return redirect("https://duckduckgo.com/?q=!ducky+" + keyword)
-
 
 def getEngine(engine):
     if engine == "ddg":
